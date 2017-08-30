@@ -42,11 +42,15 @@ class Game extends Component {
 		element we have to use sampleSize. */
 
 		this.activeCells = _.sampleSize(this.flatMatrix,this.props.activeCellsCount)
+		console.log("activeCells are",this.activeCells)
+		this.maxWrongGuess = this.props.maxGuess
+		//console.log("maxGuess is",this.props,this.props.maxGuess,this.props.activeCellsCount) 
 		//state changing variable are put in "this.state"
 		this.state = { 
 			gameState: "ready",
 			wrongGuesses: [],
-			correctGuesses: []
+			correctGuesses: [],
+			//maxGuess: this.props.maxGuess
 		}
 	}
 	componentDidMount() {
@@ -58,13 +62,24 @@ class Game extends Component {
 	recordGuess = ({ cellId, GuessIsRight} ) => {
 		//if you remove this "let" statement you will get error
 		//all the variable should come as argument or created using "let"
-		let { wrongGuesses,correctGuesses } = this.state
+		let { wrongGuesses,correctGuesses,gameState } = this.state
 		if (GuessIsRight) {
 			correctGuesses.push(cellId)
+			if(correctGuesses.length === this.props.activeCellsCount)
+				{ gameState = "won"}
+
 		} else {
 			wrongGuesses.push(cellId)
+			
+			this.maxWrongGuess = this.maxWrongGuess - 1
+			if(this.maxWrongGuess === 0){
+				gameState = "lost"
+			}
+			//console.log("recordGuess",maxGuess)
+			
+
 		}
-		this.setState({ correctGuesses, wrongGuesses })
+		this.setState({ correctGuesses, wrongGuesses, gameState })
 }
 	render() {
 		return (
@@ -83,7 +98,7 @@ class Game extends Component {
 				))}
 		{/*The three-dots spread operator will take this.state 
 		and spread all of its keys as props for the Footer component.*/}
-			<Footer {...this.state} />
+			<Footer {...this.state} maxWrongGuess={this.maxWrongGuess} />
 			</div>
 			
 		)
