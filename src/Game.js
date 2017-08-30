@@ -42,7 +42,7 @@ class Game extends Component {
 		element we have to use sampleSize. */
 
 		this.activeCells = _.sampleSize(this.flatMatrix,this.props.activeCellsCount)
-		console.log("activeCells are",this.activeCells)
+		//console.log("activeCells are",this.activeCells)
 		this.maxWrongGuess = this.props.maxGuess
 		//console.log("maxGuess is",this.props,this.props.maxGuess,this.props.activeCellsCount) 
 		//state changing variable are put in "this.state"
