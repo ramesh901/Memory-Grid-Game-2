@@ -4,6 +4,8 @@ class Footer extends Component {
 		return (
 			<div className="footer">
 				<div className="hint">
+				{//<h3>{this.props.gameState}</h3>
+			}
 				<h3>{this.props.hints[this.props.gameState]}!!!</h3>
 				</div>
 			</div>

@@ -4,7 +4,7 @@ class Cell extends Component {
 		//console.log("hilo",this.props.activeCells.indexOf(this.props.id))
   		return this.props.activeCells.indexOf(this.props.id) >= 0;
 	}
-	handleClick() {
+	handleClick = () => {
 		if (this.guessState() === undefined &&
 			this.props.gameState === "recall") {
 			this.props.recordGuess({
@@ -30,7 +30,7 @@ class Cell extends Component {
 		className += " guess-" + this.guessState();
   	
     return (
-      <div className={className} onClick={this.handleClick.bind(this)}></div>
+      <div className={className} onClick={this.handleClick}></div>
     )
   }
 }
