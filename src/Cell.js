@@ -1,16 +1,12 @@
 import React, { Component } from 'react'
 class Cell extends Component {
-  /*active() {
-    return this.props.activeCells.indexOf(this.props.id) >= 0
-  }*/
-
 
   handleClick = () => {
     if (this.guessState() === undefined &&
       this.props.gameState === "recall") {
       this.props.recordGuess({
         /*we use Arrow function for handleClick and not for guess State
-        because we assign using this.props.id and this.active*/
+        because handleClick is eventhandler*/
         cellId: this.props.id,
         GuessIsRight: this.props.isActiveCell
       })
@@ -25,10 +21,8 @@ class Cell extends Component {
     }
   }
   
-
   render() {
     let className = "cell"
-    //console.log(this.props)
     if(this.props.gameState === "memorize" 
       && this.props.isActiveCell === "true"
       ) 
@@ -36,8 +30,7 @@ class Cell extends Component {
     if(this.clicked === "true"){
       className += " guess-" + this.props.isActiveCell
     }
-    //console.log(className,"gameState",this.props.gameState,"clicked",this.clicked)
-  
+      
   return (
     <div className={className} onClick={this.handleClick}></div>
   )

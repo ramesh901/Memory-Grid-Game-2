@@ -29,31 +29,20 @@ class Game extends Component {
 				row.push(`${r}${c}`)
 			}
 			this.flatMatrix.push(...row)
-			//why we use "this" for matrix.push?
 			this.matrix.push(row)
-			//console.log("matrix is",this.matrix)
-		}
-		/*please note in flatMatrix "this" not used because
-		its not required in render */
-
-		//let flatMatrix = _.flatten(this.matrix)
-		//console.log("flatMatrix is:",flatMatrix)
-		/*using math.random we can pick single element. To select subset of 
-		element we have to use sampleSize. */
+			}
+		
+		
 		this.activeCells = this.sampleSize(this.flatMatrix,this.props.activeCellsCount)
-		//this.activeCells = _.sampleSize(this.flatMatrix,this.props.activeCellsCount)
+		
 		this.maxWrongGuess = this.props.maxGuess
 		//state changing variable are put in "this.state"
-		/*if(this.activeCells.indexOf(this.props.id) >= 0){
-			this.isActiveCell = true
-		}*/
-		//console.log("props.id",this.props.id)
-		//console.log(this.isActiveCell)
+		
 		this.state = { 
 			gameState: "ready",
 			wrongGuesses: [],
 			correctGuesses: [],
-			//maxGuess: this.props.maxGuess
+			
 		}
 	}
 	componentDidMount() {
@@ -67,18 +56,15 @@ class Game extends Component {
 			return []
 			}
 			n = n > length ? length : n
-			//console.log("n is",n)
 			let index = -1
-			//const lastIndex = n - 1
 			const result = array.slice()
 			while (++index < n) {
 				const rand = index + Math.floor(Math.random() * (length - index ))
-				//console.log("rand is",rand)
 				const value = result[rand]
 				result[rand] = result[index]
 				result[index] = value
 			}
-			//console.log("result is",result.slice(0,n))
+			
 			return result.slice(0,n)
 	}
     
@@ -120,7 +106,6 @@ class Game extends Component {
 					isActiveCell={String(this.activeCells.indexOf(cellId) >= 0)}{...this.state} 
 					//recordGuess is a function. Assigning function similar to variable
 					recordGuess={this.recordGuess}
-					//gameState={this.gameState}
 					/>)}
 				</Row>
 				))}
