@@ -1,4 +1,4 @@
-import _ from 'lodash'
+//import _ from 'lodash'
 import Row from './Row'
 import Cell from './Cell'
 import Footer from './Footer'
@@ -40,11 +40,9 @@ class Game extends Component {
 		//console.log("flatMatrix is:",flatMatrix)
 		/*using math.random we can pick single element. To select subset of 
 		element we have to use sampleSize. */
-
-		this.activeCells = _.sampleSize(this.flatMatrix,this.props.activeCellsCount)
-		//console.log("activeCells are",this.activeCells)
+		this.activeCells = this.sampleSize(this.flatMatrix,this.props.activeCellsCount)
+		//this.activeCells = _.sampleSize(this.flatMatrix,this.props.activeCellsCount)
 		this.maxWrongGuess = this.props.maxGuess
-		//console.log("maxGuess is",this.props,this.props.maxGuess,this.props.activeCellsCount) 
 		//state changing variable are put in "this.state"
 		this.state = { 
 			gameState: "ready",
@@ -57,8 +55,30 @@ class Game extends Component {
 		setTimeout(() => this.setState({ gameState: 'memorize'}),2000)
 		setTimeout(() => this.setState({ gameState: 'recall'}),4000)
 	}
-	//Why we gave curly braces for the "recordGuess" arguments?
-	//I guess its default syntax in react when there are arguments
+	
+	sampleSize(array, n) {
+		const length = array == null ? 0 : array.length
+		if (!length || n < 1) {
+			return []
+			}
+			n = n > length ? length : n
+			//console.log("n is",n)
+			let index = -1
+			//const lastIndex = n - 1
+			const result = array.slice()
+			while (++index < n) {
+				const rand = index + Math.floor(Math.random() * (length - index ))
+				//console.log("rand is",rand)
+				const value = result[rand]
+				result[rand] = result[index]
+				result[index] = value
+			}
+			//console.log("result is",result.slice(0,n))
+			return result.slice(0,n)
+	}
+    
+    //we are passing the JSON objects as arguments, hence we used curly braces 
+    //for cellId, GuessIsRight
 	recordGuess = ({ cellId, GuessIsRight} ) => {
 		//if you remove this "let" statement you will get error
 		//all the variable should come as argument or created using "let"
@@ -93,6 +113,7 @@ class Game extends Component {
 				cell component within row component*/}
 				{row.map(cellId => <Cell key={cellId} id={cellId} 
 					activeCells={this.activeCells}{...this.state} 
+					//recordGuess is a function. Assigning function similar to variable
 					recordGuess={this.recordGuess}/>)}
 				</Row>
 				))}
